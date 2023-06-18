@@ -1,0 +1,10 @@
+table ,td {
+  border: 2px solid;
+  border-collapse: collapse;
+  text-align: center;
+  /* width: 100%; */
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
