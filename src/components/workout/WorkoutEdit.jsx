@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import api from "../../api";
-import { PlusCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-
+import { PencilSquareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const options = [
   { value: "0", label: "Monday" },
@@ -14,14 +13,18 @@ const options = [
   { value: "5", label: "Saturday" },
   { value: "6", label: "Sunday" },
 ];
-
-const WorkoutAdd = () => {
+const WorkoutEdit = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { userId, workoutId } = useParams();
   const [formData, setFormData] = useState({
     name: "",
     day: "",
   });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    postData();
+  };
   const handleChange = (e) => {
     if (e.target !== undefined) {
       const { name, value } = e.target;
@@ -30,22 +33,24 @@ const WorkoutAdd = () => {
       setFormData({ ...formData, ["day"]: e.value });
     }
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // console.table(formData);
-    postData();
-  };
+  useEffect(() => {
+    api
+      .get(`users/${userId}/workouts/${workoutId}`)
+      .then((res) => setFormData(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
   const postData = () => {
     api
-      .post(`users/${id}/workouts`, formData)
-      .then((res) => console.log(res.data))
+      .put(`users/${userId}/workouts/${workoutId}`, formData)
+      //   .then((res) => console.log(res.data))
       .catch((err) => console.log(err))
-      .finally(navigate(`/users/${id}`))
+      .finally(navigate(`/users/${userId}`));
   };
-  
+
   return (
     <form className="form-stack user-form" onSubmit={handleSubmit}>
-      <h2>Create Workout</h2>
+      <h2>Edit Workout</h2>
       <label htmlFor="name">Workout Name</label>
       <input
         id="name"
@@ -59,7 +64,6 @@ const WorkoutAdd = () => {
       <label htmlFor="day">Day of the Week:</label>
       <Select
         name="day"
-        defaultValue={formData.day}
         // value={formData.day}
         onChange={handleChange}
         required
@@ -79,13 +83,13 @@ const WorkoutAdd = () => {
         </button>
         <button
           style={{ background: "none", border: "none", cursor: "pointer" }}
-          className="add"
+          className="edit"
           type="submit"
         >
-          <PlusCircleIcon width={32} height={32} />
+          <PencilSquareIcon width={32} height={32} />
         </button>
       </div>
     </form>
   );
 };
-export default WorkoutAdd;
+export default WorkoutEdit;

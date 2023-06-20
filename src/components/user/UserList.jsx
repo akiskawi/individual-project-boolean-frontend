@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import api from "../../api";
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  EyeIcon,
+} from "@heroicons/react/24/outline";
 
-const UserList = ({ users,handleDeleteUser }) => {
- 
+const UserList = ({ users, handleDeleteUser }) => {
   return (
     <>
       <header>
@@ -17,10 +20,18 @@ const UserList = ({ users,handleDeleteUser }) => {
                 {user.firstName} {user.lastName}
               </p>
               <p className="links">
-                <Link to={`users/${user.id}`}>View</Link>
-                <Link to={`users/edit/${user.id}`}>Edit</Link>
-                <Link to={`/`} onClick={() => handleDeleteUser(user.id)}>
-                  Delete
+                <Link className="view" to={`users/${user.id}`}>
+                  <EyeIcon width={24} height={24} />
+                </Link>
+                <Link className="edit" to={`users/edit/${user.id}`}>
+                  <PencilSquareIcon width={24} height={24} />
+                </Link>
+                <Link
+                  className="delete"
+                  to={`/`}
+                  onClick={() => handleDeleteUser(user.id)}
+                >
+                  <TrashIcon width={24} height={24} />
                 </Link>
               </p>
             </li>

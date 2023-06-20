@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { PlusCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+
 import api from "../../api";
 const initDataUser = {
   firstName: "",
@@ -137,8 +139,21 @@ const UserAdd = ({ users, setUsers }) => {
         required
       />
       <div className="actions-section">
-        <button className="button blue" type="submit">
-          Create
+        <button
+          style={{ background: "none", border: "none", cursor: "pointer" }}
+          className="delete"
+          onClick={() => navigate(-1)}
+          type="reset"
+          //   type="submit"
+        >
+          <XMarkIcon width={32} height={32} />
+        </button>
+        <button
+          style={{ background: "none", border: "none", cursor: "pointer" }}
+          className="add"
+          type="submit"
+        >
+          <PlusCircleIcon width={32} height={32} />
         </button>
       </div>
     </form>

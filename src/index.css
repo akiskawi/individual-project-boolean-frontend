@@ -186,3 +186,17 @@ table ,td {
 .form-meeting label {
   max-width: 100px;
 }
+
+.add{
+  color: blue;
+}
+.edit{
+  color:orange
+}
+.view{
+  color:green
+}
+.delete{
+  color:red
+}
+

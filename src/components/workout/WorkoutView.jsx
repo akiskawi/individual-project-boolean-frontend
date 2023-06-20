@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { PencilSquareIcon, TrashIcon,PlusIcon } from "@heroicons/react/24/outline";
+
 import api from "../../api";
 
 const WorkoutView = () => {
@@ -13,7 +15,7 @@ const WorkoutView = () => {
 
   useEffect(() => {
     api
-      .get(`users/${userId}/workouts/${id}`)
+      .get(`users/${userId}/workouts/${id}/all`)
       .then((res) => setWorkout(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -48,16 +50,23 @@ const WorkoutView = () => {
                 {exercise.name} {exercise.sets}X{exercise.reps}@{exercise.rpe}
               </p>
               <p className="links">
-                <Link to={`exercises/edit/${exercise.id}`}>Edit</Link>
-                <Link onClick={() => handleDeleteLink(exercise.id)}>
-                  Delete
+                <Link className="edit" to={`exercises/edit/${exercise.id}`}>
+                  <PencilSquareIcon width={24} height={24} />
+                </Link>
+                <Link
+                  className="delete"
+                  onClick={() => handleDeleteLink(exercise.id)}
+                >
+                  <TrashIcon width={24} height={24} />
                 </Link>
               </p>
             </li>
           );
         })}
         <li className="user">
-          <Link to={`exercises/add`}>Add One</Link>
+          <Link className="add" to={`exercises/add`}>
+            <PlusIcon width={24} height={24} />
+          </Link>
         </li>
       </ul>
     </>

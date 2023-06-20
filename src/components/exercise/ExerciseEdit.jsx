@@ -1,76 +1,86 @@
 import { useEffect, useState } from "react";
-import api from "../../api";
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../../api";
 import { PencilSquareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const UserEdit = ({ users, setUsers }) => {
+const ExerciseEdit = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
+    name: "",
+    rpe: "",
+    sets: "",
+    reps: "",
   });
+  const { userId, workoutId, exerciseId } = useParams();
+
   useEffect(() => {
     api
-      .get(`users/${id}`)
+      .get(`users/${userId}/workouts/${workoutId}/exercises/${exerciseId}`)
       .then((res) => setFormData(res.data))
       .catch((err) => console.log(err));
   }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    postData();
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // console.log(formData);
+  const postData = () => {
     api
-      .put(`users/${id}`, formData)
-      .then( 
-        (res) =>
-          setUsers((prevState) =>
-            prevState.map((user) =>
-              user.id === res.data.id ? res.data : user
-            )
-          )
-        
+      .put(
+        `users/${userId}/workouts/${workoutId}/exercises/${exerciseId}`,
+        formData
       )
-      .catch((err) => console.log(err))
-      .finally(navigate("/"));
+      .then(navigate(`/users/${userId}/workouts/${workoutId}`));
   };
 
   return (
     <form className="form-stack user-form" onSubmit={handleSubmit}>
-      <h2>Create User</h2>
-      <label htmlFor="firstName">First Name</label>
+      <h2>Edit Exercise</h2>
+      <label htmlFor="name">Exercise Name</label>
       <input
-        id="firstName"
-        name="firstName"
+        id="name"
+        name="name"
         type="text"
-        value={formData.firstName}
+        value={formData.name}
         onChange={handleChange}
-        placeholder="Joe"
+        placeholder="Deadlift"
+        required
       />
-      <label htmlFor="lastName">Last Name:</label>
+      <label htmlFor="sets">Sets:</label>
       <input
-        id="lastName"
-        name="lastName"
-        type="text"
-        value={formData.lastName}
+        id="sets"
+        name="sets"
+        type="number"
+        value={formData.sets}
         onChange={handleChange}
-        placeholder="Doe"
+        placeholder="3"
+        required
       />
-      <label htmlFor="email">Email:</label>
+      <label htmlFor="reps">Reps:</label>
       <input
-        id="email"
-        name="email"
-        type="email"
-        value={formData.email}
+        id="reps"
+        name="reps"
+        type="number"
+        value={formData.reps}
         onChange={handleChange}
-        placeholder="email@example.com"
+        placeholder="3"
+        required
       />
+      <label htmlFor="rpe">Rpe:</label>
+      <input
+        id="rpe"
+        name="rpe"
+        type="number"
+        value={formData.rpe}
+        onChange={handleChange}
+        placeholder="3"
+        required
+      />
+
       <div className="actions-section">
         <button
           style={{ background: "none", border: "none", cursor: "pointer" }}
@@ -92,4 +102,4 @@ const UserEdit = ({ users, setUsers }) => {
     </form>
   );
 };
-export default UserEdit;
+export default ExerciseEdit;

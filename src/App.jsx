@@ -8,6 +8,8 @@ import WorkoutAdd from "./components/workout/WorkoutAdd";
 import WorkoutView from "./components/workout/WorkoutView";
 import ExerciseAdd from "./components/exercise/ExerciseAdd";
 import UserEdit from "./components/user/UserEdit";
+import WorkoutEdit from "./components/workout/WorkoutEdit";
+import ExerciseEdit from "./components/exercise/ExerciseEdit";
 
 const testUser = {
   id: 1,
@@ -75,21 +77,26 @@ function App() {
                 element={<WorkoutView />}
               />
               <Route
+                path="/users/:userId/workouts/edit/:workoutId"
+                element={<WorkoutEdit />}
+              />
+              <Route
                 path="/users/:userId/workouts/:id/exercises/add"
                 element={<ExerciseAdd />}
+              />
+              <Route
+                path="/users/:userId/workouts/:workoutId/exercises/edit/:exerciseId"
+                element={<ExerciseEdit />}
               />
 
               <Route
                 path="/users/edit/:id"
-                element={
-                  <UserEdit users={users} setUsers={setUsers} />
-                }
+                element={<UserEdit users={users} setUsers={setUsers} />}
               />
               <Route
                 path="/users/add"
                 element={<UserAdd users={users} setUsers={setUsers} />}
               />
-              {/* <Route path="/contact/:id/meetings" element={<Meetings />} /> */}
             </Routes>
           ) : (
             <span className="loader"></span>

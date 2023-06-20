@@ -1,6 +1,9 @@
 import { useState } from "react";
 import api from '../../api'
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams }
+ from "react-router-dom";
+import { PlusCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+
 
 const ExerciseAdd = () => {
    const navigate =  useNavigate();
@@ -28,7 +31,7 @@ const postData = () => {
 }
   return (
     <form className="form-stack user-form" onSubmit={handleSubmit}>
-      <h2>Create Workout</h2>
+      <h2>Create Exercise</h2>
       <label htmlFor="name">Exercise Name</label>
       <input
         id="name"
@@ -71,8 +74,21 @@ const postData = () => {
       />
 
       <div className="actions-section">
-        <button className="button blue" type="submit">
-          Create
+        <button
+          style={{ background: "none", border: "none", cursor: "pointer" }}
+          className="delete"
+          onClick={() => navigate(-1)}
+          type="reset"
+          //   type="submit"
+        >
+          <XMarkIcon width={32} height={32} />
+        </button>
+        <button
+          style={{ background: "none", border: "none", cursor: "pointer" }}
+          className="add"
+          type="submit"
+        >
+          <PlusCircleIcon width={32} height={32} />
         </button>
       </div>
     </form>

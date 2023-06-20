@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../../api";
+import WorkoutList from "../workout/WorkoutList";
 
 const UserView = () => {
   const { id } = useParams();
@@ -23,7 +24,6 @@ const UserView = () => {
             ...user,
             workouts: [...user.workouts.filter((w) => w.id !== workoutId)],
           }
-          // (users) => users.filter((u) => u.id !== res.data.id)
         );
       })
       .catch((err) => console.log(err));
@@ -94,27 +94,7 @@ const UserView = () => {
           <header>
             <h3>Workouts</h3>
           </header>
-          <ul className="user-list">
-            {user.workouts.map((workout, index) => {
-              return (
-                <li className="user" key={index}>
-                  <p>
-                    {workout.name} {workout.day}
-                  </p>
-                  <p className="links">
-                    <Link to={`workouts/${workout.id}`}>View</Link>
-                    <Link to={`workouts/edit/${workout.id}`}>Edit</Link>
-                    <Link onClick={() => handleDeleteWorkout(workout.id)}>
-                      Delete
-                    </Link>
-                  </p>
-                </li>
-              );
-            })}
-            <li className="user">
-              <Link to={`workouts/add`}>Add One</Link>
-            </li>
-          </ul>
+          <WorkoutList handleDeleteWorkout={handleDeleteWorkout} workouts={user.workouts}/>
         </>
       </div>
     </>
