@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import api from "../../api";
 
-const UserList = ({ users,setSingleUser }) => {
-  const handleDeleteLink = (id) => {
-    console.log(id);
-  };
+const UserList = ({ users,handleDeleteUser }) => {
+ 
   return (
     <>
       <header>
@@ -18,9 +17,9 @@ const UserList = ({ users,setSingleUser }) => {
                 {user.firstName} {user.lastName}
               </p>
               <p className="links">
-                <Link to={`users/${user.id}`} >View</Link>
-                <Link to={`users/edit/${user.id}`} >Edit</Link>
-                <Link to={`/`} onClick={() => handleDeleteLink(user.id)}>
+                <Link to={`users/${user.id}`}>View</Link>
+                <Link to={`users/edit/${user.id}`}>Edit</Link>
+                <Link to={`/`} onClick={() => handleDeleteUser(user.id)}>
                   Delete
                 </Link>
               </p>

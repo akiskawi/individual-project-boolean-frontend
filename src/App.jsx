@@ -4,6 +4,10 @@ import { Link, Route, Routes } from "react-router-dom";
 import UserList from "./components/user/UserList";
 import UserAdd from "./components/user/UserAdd";
 import UserView from "./components/user/UserView";
+import WorkoutAdd from "./components/workout/WorkoutAdd";
+import WorkoutView from "./components/workout/WorkoutView";
+import ExerciseAdd from "./components/exercise/ExerciseAdd";
+import UserEdit from "./components/user/UserEdit";
 
 const testUser = {
   id: 1,
@@ -25,12 +29,21 @@ const testUser = {
 function App() {
   const [users, setUsers] = useState(false);
   useEffect(() => {
-// setUsers([testUser])
+    // setUsers([testUser])
     api
       .get("/users")
       .then((res) => setUsers(res.data))
       .catch((err) => console.log(err));
   }, []);
+
+  const handleDeleteUser = (id) => {
+    api
+      .delete(`users/${id}`)
+      .then((res) => {
+        setUsers((users) => users.filter((u) => u.id !== res.data.id));
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
@@ -49,19 +62,32 @@ function App() {
         <main>
           {users ? (
             <Routes>
-              <Route path="/" element={<UserList users={users}  />} />
-              <Route path="/users/:id" element={<UserView />} />
-              {/* <Route
-                path="/contacts/edit/:id"
+              <Route
+                path="/"
                 element={
-                  <ContactsEdit contacts={contacts} setContacts={setContacts} />
+                  <UserList users={users} handleDeleteUser={handleDeleteUser} />
                 }
-              /> */}
+              />
+              <Route path="/users/:id" element={<UserView />} />
+              <Route path="/users/:id/workouts/add" element={<WorkoutAdd />} />
+              <Route
+                path="/users/:userId/workouts/:id"
+                element={<WorkoutView />}
+              />
+              <Route
+                path="/users/:userId/workouts/:id/exercises/add"
+                element={<ExerciseAdd />}
+              />
+
+              <Route
+                path="/users/edit/:id"
+                element={
+                  <UserEdit users={users} setUsers={setUsers} />
+                }
+              />
               <Route
                 path="/users/add"
-                element={
-                  <UserAdd users={users} setUsers={setUsers} />
-                }
+                element={<UserAdd users={users} setUsers={setUsers} />}
               />
               {/* <Route path="/contact/:id/meetings" element={<Meetings />} /> */}
             </Routes>
