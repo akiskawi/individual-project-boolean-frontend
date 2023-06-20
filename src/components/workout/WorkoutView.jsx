@@ -48,7 +48,6 @@ const WorkoutView = () => {
                 {exercise.name} {exercise.sets}X{exercise.reps}@{exercise.rpe}
               </p>
               <p className="links">
-                <Link to={`exercises/${exercise.id}`}>View</Link>
                 <Link to={`exercises/edit/${exercise.id}`}>Edit</Link>
                 <Link onClick={() => handleDeleteLink(exercise.id)}>
                   Delete
