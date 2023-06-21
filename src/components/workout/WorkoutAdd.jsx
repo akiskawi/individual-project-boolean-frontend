@@ -4,7 +4,6 @@ import Select from "react-select";
 import api from "../../api";
 import { PlusCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-
 const options = [
   { value: "0", label: "Monday" },
   { value: "1", label: "Tuesday" },
@@ -23,18 +22,19 @@ const WorkoutAdd = () => {
     day: "",
   });
   const handleChange = (e) => {
-    if (e.target.type === "text") {
+    // if (e.target.type === "text") {
+    // }
+    if (e.target !== undefined) {
       if (/\d/.test(e.nativeEvent.data)) {
         e.target.classList.add("wrong");
         setTimeout(function () {
           e.target.classList.remove("wrong");
         }, 300);
         return;
+      } else {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
       }
-    }
-    if (e.target !== undefined) {
-      const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
     } else {
       setFormData({ ...formData, ["day"]: e.value });
     }
@@ -47,11 +47,11 @@ const WorkoutAdd = () => {
   const postData = () => {
     api
       .post(`users/${id}/workouts`, formData)
-      .then((res) => console.log(res.data))
+      // .then((res) => console.log(res.data))
       .catch((err) => console.log(err))
-      .finally(navigate(`/users/${id}`))
+      .finally(navigate(`/users/${id}`));
   };
-  
+
   return (
     <form className="form-stack user-form" onSubmit={handleSubmit}>
       <h2>Create Workout</h2>

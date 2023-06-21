@@ -25,23 +25,22 @@ const WorkoutEdit = () => {
     console.log(formData);
     postData();
   };
-  const handleChange = (e) => {
-    if (e.target.type === "text") {
-      if (/\d/.test(e.nativeEvent.data)) {
-        e.target.classList.add("wrong");
-        setTimeout(function () {
-          e.target.classList.remove("wrong");
-        }, 300);
-        return;
-      }
-    }
-    if (e.target !== undefined) {
-      const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
-    } else {
-      setFormData({ ...formData, ["day"]: e.value });
-    }
-  };
+   const handleChange = (e) => {
+     if (e.target !== undefined) {
+       if (/\d/.test(e.nativeEvent.data)) {
+         e.target.classList.add("wrong");
+         setTimeout(function () {
+           e.target.classList.remove("wrong");
+         }, 300);
+         return;
+       } else {
+         const { name, value } = e.target;
+         setFormData({ ...formData, [name]: value });
+       }
+     } else {
+       setFormData({ ...formData, ["day"]: e.value });
+     }
+   };
   useEffect(() => {
     api
       .get(`users/${userId}/workouts/${workoutId}`)
