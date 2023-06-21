@@ -78,7 +78,9 @@ const postData = () => {
         type="number"
         value={formData.rpe}
         onChange={handleChange}
-        placeholder="3"
+        placeholder="6"
+        min={6}
+        max={10}
         required
       />
 
