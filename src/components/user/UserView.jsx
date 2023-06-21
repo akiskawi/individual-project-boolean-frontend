@@ -66,7 +66,7 @@ const UserView = () => {
             <ul>
               <li>Height: {user.stats.height}</li>
               <li>Weight: {user.stats.weight}</li>
-              <li>Bodyfat: {user.stats.bodyFat}</li>
+              <li>Bodyfat: {user.stats.bodyFat}<span>%</span></li>
             </ul>
           </div>
           <div>
@@ -83,6 +83,7 @@ const UserView = () => {
                 <span id="bodyFat" contentEditable>
                   {user.goals.bodyFat}
                 </span>
+                <span>%</span>
               </li>
               <li>
                 <button onClick={handleGoalsUpdate}>Change Goals</button>

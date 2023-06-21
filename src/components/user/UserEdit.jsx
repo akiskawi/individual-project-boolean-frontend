@@ -19,6 +19,15 @@ const UserEdit = ({ users, setUsers }) => {
   }, []);
 
   const handleChange = (e) => {
+    if (e.target.type === "text") {
+      if (/\d/.test(e.nativeEvent.data)) {
+        e.target.classList.add("wrong");
+        setTimeout(function () {
+          e.target.classList.remove("wrong");
+        }, 300);
+        return;
+      }
+    }
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };

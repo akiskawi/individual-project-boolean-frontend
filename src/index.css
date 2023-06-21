@@ -40,8 +40,6 @@ body {
   padding: 10px;
 }
 
-
-
 /* Inherit fonts for inputs and buttons */
 input,
 button,
@@ -152,7 +150,8 @@ h2 {
   display: flex;
   gap: 0.25rem;
 }
-table ,td {
+table,
+td {
   border: 2px solid;
   border-collapse: collapse;
   text-align: center;
@@ -187,16 +186,21 @@ table ,td {
   max-width: 100px;
 }
 
-.add{
+.add {
   color: blue;
 }
-.edit{
-  color:orange
+.edit {
+  color: orange;
 }
-.view{
-  color:green
+.view {
+  color: green;
 }
-.delete{
-  color:red
+.delete {
+  color: red;
 }
 
+.wrong {
+  background-color:  red;
+  opacity: 0.4;
+  color:black;
+}

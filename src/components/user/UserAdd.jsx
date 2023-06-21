@@ -22,7 +22,17 @@ const initDataUser = {
 const UserAdd = ({ users, setUsers }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(initDataUser);
+
   const handleChange = (e) => {
+    if (e.target.type === "text") {
+      if (/\d/.test(e.nativeEvent.data)) {
+        e.target.classList.add("wrong");
+        setTimeout(function () {
+          e.target.classList.remove("wrong");
+        }, 300);
+        return;
+      }
+    }
     const { name, value } = e.target;
     const names = name.split(" ");
     if (names.length == 1) {
@@ -35,16 +45,12 @@ const UserAdd = ({ users, setUsers }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newFormData = { ...formData };
-    newFormData.goals.bodyFat += "%";
-    newFormData.stats.bodyFat += "%";
-    setFormData(newFormData);
-    postData(newFormData);
+    postData();
     setFormData(initDataUser);
   };
-  const postData = (data) => {
+  const postData = () => {
     api
-      .post("/users", data)
+      .post("/users", formData)
       .then((res) => {
         const newUser = res.data;
         setUsers([...users, newUser]);
@@ -54,7 +60,11 @@ const UserAdd = ({ users, setUsers }) => {
   };
 
   return (
-    <form className="form-stack user-form" onSubmit={handleSubmit}>
+    <form
+      // onKeyDownCapture={handleNameChange}
+      className="form-stack user-form"
+      onSubmit={handleSubmit}
+    >
       <h2>Create User</h2>
       <label htmlFor="firstName">First Name</label>
       <input
